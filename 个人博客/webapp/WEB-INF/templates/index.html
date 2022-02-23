@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-hans" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>博客系统 | 列表</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/bloglist.css">
+</head>
+<body>
+    <div class="nav">
+        <!-- 头部导航 navigator -->
+        <img src="/img/blog.jpg" alt="logo 图">
+        <span class="title" th:text="${user.nickname} + '的博客'">张彪的博客</span>
+        <!-- 无意义的，为了撑开布局空间 -->
+        <span class="spacer"></span>
+        <a href="/">主页</a>
+        <a href="/edit.html">写博客</a>
+        <!-- 注销：删除用户的登录状态，需要动态操作，暂时不管 -->
+        <a href="/logout.html">注销</a>
+    </div>
+
+    <div class="container">
+        <!-- 内容区 -->
+        <div class="container-left">
+            <!-- 个人信息 -->
+            <div class="card">
+                <img src="img/head.jpg" alt="作者头像" class="avatar" th:src="${user.avatar}">
+                <h3 th:text="${user.nickname}">张彪</h3>
+                <div class="counter">
+                    <span>文章</span>
+                    <span>分类</span>
+                </div>
+                <div class="counter">
+                    <span th:text="${articleCount}">10</span>
+                    <span th:text="${typeCount}">2</span>
+                </div>
+            </div>
+        </div>
+        <div class="container-right">
+            <!-- 文章列表 -->
+            <div class="blog" th:each="article : ${articleList}">
+                <div class="title" th:text="${article.title}">Java虚拟据</div>
+                <div class="date" th:text="${article.published_date}">2021-12-22</div>
+                <div class="desc" th:text="${article.desc}">从今天起, 我要认真敲代码.</div>
+                <!-- > 是 HTML 中的特殊字符，需要进行转义，&gt;  gt: great   lt: little -->
+                <a class="detail" href="/article.html" th:href="'/article.html?aid=' + ${article.aid}">查看正文 &gt;&gt;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

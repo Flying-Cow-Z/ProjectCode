@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-hans" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>博客系统 | 列表</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/article.css">
+    <link rel="stylesheet" href="editor.md/css/editormd.min.css">
+
+</head>
+<body>
+    <div class="nav">
+        <!-- 头部导航 navigator -->
+        <img src="/img/blog.jpg" alt="logo 图">
+        <span class="title" th:text="${user.nickname} + '的博客'">张彪的博客</span>
+        <!-- 无意义的，为了撑开布局空间 -->
+        <span class="spacer"></span>
+        <a href="/">主页</a>
+        <a href="/edit.html">写博客</a>
+        <!-- 注销：删除用户的登录状态，需要动态操作，暂时不管 -->
+        <a href="logout.html">注销</a>
+    </div>
+
+    <div class="container">
+        <!-- 内容区 -->
+        <div class="container-left">
+            <!-- 个人信息 -->
+            <div class="card">
+                <img src="img/head.jpg" alt="作者头像" class="avatar" th:src="${user.avatar}">
+                <h3 th:text="${user.nickname}">张彪</h3>
+                <div class="counter">
+                    <span>文章</span>
+                    <span>分类</span>
+                </div>
+                <div class="counter">
+                    <span th:text="${articleCount}">10</span>
+                    <span th:text="${typeCount}">2</span>
+                </div>
+            </div>
+        </div>
+        <div class="container-right">
+            <div class="blog-content">
+                <h3 th:text="${article.title}">蜀道难</h3>
+                <div class="date" th:text="${article.published_date}">2021-12-22</div>
+                <div id="content" th:text="${article.content}">
+                    噫吁嚱，危乎高哉！蜀道之难，难于上青天！蚕丛及鱼凫，开国何茫然！尔来四万八千岁，不与秦塞通人烟。西当太白有鸟道，可以横绝峨眉巅。地崩山摧壮士死，然后天梯石栈相钩连。上有六龙回日之高标，下有冲波逆折之回川。黄鹤之飞尚不得过，猿猱欲度愁攀援。青泥何盘盘，百步九折萦岩峦。扪参历井仰胁息，以手抚膺坐长叹。
+                    问君西游何时还？畏途巉岩不可攀。但见悲鸟号古木，雄飞雌从绕林间。又闻子规啼夜月，愁空山。蜀道之难，难于上青天，使人听此凋朱颜！连峰去天不盈尺，枯松倒挂倚绝壁。飞湍瀑流争喧豗，砯崖转石万壑雷。其险也如此，嗟尔远道之人胡为乎来哉！
+                    剑阁峥嵘而崔嵬，一夫当关，万夫莫开。所守或匪亲，化为狼与豺。朝避猛虎，夕避长蛇；磨牙吮血，杀人如麻。锦城虽云乐，不如早还家。蜀道之难，难于上青天，侧身西望长咨嗟！</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 引入 editor.md -->
+        <script src="js/jquery.min.js"></script>
+        <script src="editor.md/lib/marked.min.js"></script>
+        <script src="editor.md/lib/prettify.min.js"></script>
+        <script src="editor.md/editormd.js"></script>
+        <script>
+            // 找到 id=content 的标签
+            // 从标签中读取出 markdown 内容
+            var markdown = document.querySelector("#content").innerHTML;
+            document.querySelector("#content").innerHTML = "";
+            // 利用 editor.md 将 markdown 转成 html 格式，并且填充回 id=content 的标签
+            editormd.markdownToHTML('content', { markdown: markdown });
+        </script>
+
+    </div>
+</body>
+</html>

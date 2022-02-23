@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-hans" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>博客系统 | 创作博客</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/edit.css">
+    <link rel="stylesheet" href="editor.md/css/editormd.min.css">
+</head>
+<body>
+    <div class="nav">
+        <!-- 头部导航 navigator-->
+        <img src="img/blog.jpg" alt="logo 图">
+        <span class="title" th:text="${user.nickname} + '的博客'">张彪的博客</span>
+        <!-- 无意义的内容，占据空间的-->
+        <span class="spacer"></span>
+        <a href="/">主页</a>
+        <a href="edit.html">创作博客</a>
+        <a href="logout.html">注销</a>
+    </div>
+
+    <!-- 编辑框容器 -->
+    <div class="blog-edit-container">
+        <form action="save-article.html" method="post">
+            <!-- 标题编辑区 -->
+            <div class="title">
+                <input type="text" placeholder="在这里写下文章标题" id="title" name="title">
+                <button id="submit">发布文章</button>
+            </div>
+            <!-- 创建编辑器标签 -->
+            <div id="editor">
+                <textarea name="content" style="display: none;"></textarea>
+            </div>
+
+    </div>
+        </form>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
+    <script>
+        // 初始化编辑器
+        var editor = editormd("editor", {
+        // 这里的尺寸必须在这里设置. 设置样式会被 editormd 自动覆盖掉.
+                    width: "100%",
+        // 高度 100% 意思是和父元素一样高. 要在父元素的基础上去掉标题编辑区的高度
+                    height: "calc(100% - 50px)",
+        // 编辑器中的初始内容
+                    markdown: "# 在这里使用markdown格式写下一篇博客",
+        // 指定 editor.md 依赖的插件路径
+            path: "editor.md/lib/",
+            saveHTMLToTextarea: true
+        });
+    </script>
+
+
+</body>
+</html>
